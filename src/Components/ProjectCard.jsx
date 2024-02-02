@@ -30,7 +30,7 @@ function ProjectCard() {
           </Row>
           <div>
             <a href="https://github.com/sanchu-git/Project-Fair" target='_blank' className='btn me-3'><i style={{height:'40px'}} className="fa-brands fa-github fa-2x"></i> </a>
-            <a href="https://github.com/sanchu-git/Project-Fair" target='_blank' className='btn me-3'><i style={{height:'40px'}} className="fa-solid fa-link fa-2x"></i> </a>
+            <a href="https://project-fair-vert.vercel.app/" target='_blank' className='btn me-3'><i style={{height:'40px'}} className="fa-solid fa-link fa-2x"></i> </a>
 
           </div>
         </Modal.Body>

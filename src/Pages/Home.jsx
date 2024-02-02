@@ -1,9 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import landingImg from '../assets/Images/world.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ProjectCard from '../Components/ProjectCard'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
+  const navigate = useNavigate()
+  const [isLoggedIn,setIsLoggedIn] = useState(false)
+
+  useEffect(()=>{
+    if(sessionStorage.getItem("token")){
+      setIsLoggedIn(true)
+    }else{
+      setIsLoggedIn(false)
+    }
+  },[])
+
+
+  const handleProjectPage = ()=>{
+    if(sessionStorage.getItem("token")){
+      navigate('/projects')
+    }else{
+      toast.warning("Please Login to Explore Our Project!!!")
+
+    }
+  }
   return (
     <>
       {/* landing part */}
@@ -16,7 +38,8 @@ function Home() {
               <p>
                 One Stop Destination For All Software Development Projects. Where User Can add and manage their projects.
                 As well as access all projects available in our website... What are you waiting For!!!
-                <Link className="btn btn-warning mt-2" to={'/login'}>Starts to Explore <i class="fa-solid fa-arrow-right"></i></Link>
+                {isLoggedIn?<Link className="btn btn-warning mt-2" to={'/dashboard'}>Manage Your Project <i class="fa-solid fa-arrow-right"></i></Link>:
+                <Link className="btn btn-warning mt-2" to={'/login'}>Starts to Explore <i class="fa-solid fa-arrow-right"></i></Link>}
               </p>
             </div>
             <div className='col-lg-2'></div>
@@ -38,12 +61,12 @@ function Home() {
           </div>
         </marquee>
         <div className="text-center">
-          <button className='btn btn-link'>view more Projects</button>
+          <button onClick={handleProjectPage} className='btn btn-link'>view more Projects</button>
         </div>
       </div>
 
 
-
+      <ToastContainer autoClose={3000} theme='colored' />
 
     </>
   )
