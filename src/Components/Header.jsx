@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Navbar, Container } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { tokenAuthenticationContext } from '../Context API/TokenAuth'
 
 
 function Header(insideDashboard) {
+  const navigate = useNavigate()
+  const {isAuthorised,setIsAuthorised} = useContext(tokenAuthenticationContext)
+  const handleLogout = ()=>{
+    sessionStorage.removeItem("token")
+    sessionStorage.removeItem("username")
+    setIsAuthorised(false)
+    navigate('/')
+  }
   return (
     <>
       <Navbar expand="lg" style={{ background: 'greenyellow' }}>
@@ -13,7 +22,7 @@ function Header(insideDashboard) {
            {
             insideDashboard &&
             <div className='ms-auto'>
-              <button className='btn text-danger fw-bold fs-5'><i class="fa-solid fa-gear"></i>Logout</button>
+              <button onClick={handleLogout} className='btn text-danger fw-bold fs-5'><i class="fa-solid fa-gear"></i>Logout</button>
             </div>
           } 
         </Container>

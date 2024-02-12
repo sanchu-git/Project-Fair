@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import loginImg from '../assets/Images/login.png'
 import { Form } from 'react-bootstrap'
@@ -7,9 +7,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { registerAPI } from '../Services/allAPI';
 import { loginAPI } from '../Services/allAPI';
 import Spinner from 'react-bootstrap/Spinner';
+import { tokenAuthenticationContext } from '../Context API/TokenAuth';
 
 
 function Auth({ insideRegister }) {
+
+  const {isAuthorised,setIsAuthorised} = useContext(tokenAuthenticationContext)
 
   const [loginStatus,setLoginStatus] = useState(false)
 
@@ -62,6 +65,8 @@ function Auth({ insideRegister }) {
           setLoginStatus(true)
           sessionStorage.setItem("username",result.data.existingUser.username)
           sessionStorage.setItem("token",result.data.token)
+          sessionStorage.setItem("userDetails",JSON.stringify(result.data.existingUser))
+          setIsAuthorised(true)
           setTimeout(()=>{
             setUserData({email:"",password:""})
             navigate('/')

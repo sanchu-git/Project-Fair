@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import uploadImg from '../assets/Images/upload.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addProjectAPI } from '../Services/allAPI';
+import { AddProjectResponseContext } from '../Context API/ContextShare';
 
 function AddProject() {
+  // get Context
+  const {AddProjectResponse,setAddProjectResponse} = useContext(AddProjectResponseContext)
   const [preview, setPreview] = useState("")
   const [fileStatus, setFileStatus] = useState(false)
   const [show, setShow] = useState(false);
@@ -71,7 +74,7 @@ function AddProject() {
           if (result.status == 200) {
             console.log(result.data);
             handleClose()
-
+            setAddProjectResponse(result.data)
           } else {
             toast.warning(result.response.data)
           }
